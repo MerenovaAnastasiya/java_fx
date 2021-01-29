@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity"
+            maxWidth="-Infinity"
+            minHeight="-Infinity"
+            minWidth="-Infinity"
+            prefHeight="400.0"
+            prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controllers.MainController">
+   <children>
+      <AnchorPane prefHeight="83.0" prefWidth="600.0" style="-fx-background-color: white;">
+         <effect>
+            <DropShadow blurType="TWO_PASS_BOX" spread="0.05">
+               <color>
+                  <Color opacity="0.26021504402160645" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Text fill="#434343" layoutX="279.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Тесты по языку Java">
+               <font>
+                  <Font size="26.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="400.0" prefWidth="189.0" style="-fx-background-color: white;">
+         <effect>
+            <DropShadow spread="0.05">
+               <color>
+                  <Color opacity="0.13118278980255127" />
+               </color>
+            </DropShadow>
+         </effect>
+         <children>
+            <Text fill="#797878" layoutX="76.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Программа с тестами" wrappingWidth="86.04833984375" />
+            <Line endX="155.0" endY="101.0" layoutY="12.0" startX="36.0" startY="101.0" stroke="#c9c2c2" strokeWidth="5.0" />
+            <Button layoutX="40.0" layoutY="142.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="112.0" style="-fx-background-radius: 5px;" text="Тесты по Java" />
+            <Button layoutX="39.0" layoutY="195.0" mnemonicParsing="false" style="-fx-background-radius: 5px;" text="Тесты по Python" />
+            <Button layoutX="37.0" layoutY="248.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="112.0" style="-fx-background-radius: 5px;" text="Тесты по C#" />
+            <Line endX="155.0" endY="101.0" layoutY="200.0" startX="36.0" startY="101.0" stroke="#c9c2c2" strokeWidth="5.0" />
+            <Button layoutX="15.0" layoutY="326.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="162.0" style="-fx-background-color: #cd5757;
+             -fx-border-radius: 5px;" text="Выйти" textFill="WHITE"
+            fx:id="quitButton" onAction="#quit">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="83.0" fitWidth="68.0" layoutX="6.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/icon.png" />
+               </image>
+            </ImageView>
+
+         </children>
+      </AnchorPane>
+      <Pane fx:id="answersGroup">
+      <RadioButton layoutX="225.0" layoutY="183.0" mnemonicParsing="false" text="xxx">
+         <toggleGroup>
+            <ToggleGroup fx:id="answers"/>
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="225.0" layoutY="282.0" mnemonicParsing="false" text="xxx" toggleGroup="$answers"/>
+      <RadioButton layoutX="225.0" layoutY="231.0" mnemonicParsing="false" text="xxx" toggleGroup="$answers"/>
+      </Pane>
+
+
+
+      <Button layoutX="314.0" layoutY="333.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="162.0" style="-fx-background-color: #cd5757; -fx-border-radius: 5px;"
+              text="Ответить" textFill="WHITE"
+      fx:id="answerButton" onAction="#answerTheQuestion">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Text fill="#868686" layoutX="225.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Вопрос вопрос вопрос вопрос вопрос">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
