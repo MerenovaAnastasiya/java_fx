@@ -4,20 +4,29 @@ import components.Answer;
 import components.Question;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainController {
 
     ArrayList<Question> questions = new ArrayList<>();
     int currentQuestion = 0;
+    int correctAnswersCount;
 
 
     @FXML
@@ -27,10 +36,13 @@ public class MainController {
     Button answerButton;
 
     @FXML
-    Pane answersGroup;
+    Pane answersPane;
 
     @FXML
     ToggleGroup answers;
+
+    @FXML
+    Text result;
 
     @FXML
     public void quit() {
@@ -39,37 +51,54 @@ public class MainController {
     }
 
     @FXML
-    public void answerTheQuestion() {
+    public void answerTheQuestion() throws IOException {
         RadioButton selectedButton = (RadioButton) answers.getSelectedToggle();
         ObservableList<Toggle> buttons = answers.getToggles();
-        if(selectedButton == null) {
-            System.out.println("Ошибка!!!!");
-        }
-        else {
-            if(currentQuestion == questions.size() - 1) {
-                System.out.println("Вывести результат");
-            }
-            else {
+        if (selectedButton == null) {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            URL xmlUrl = getClass().getResource("/window.fxml");
+            loader.setLocation(xmlUrl);
+            Parent root = loader.load();
+            Scene modalScene = new Scene(root);
+            stage.setWidth(200);
+            stage.setHeight(200);
+            stage.setScene(modalScene);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(quitButton.getScene().getWindow());
+            stage.show();
+        } else {
+            if (currentQuestion == questions.size() - 1) {
+                FileWriter fileWriter = new FileWriter("result.txt");
+                fileWriter.write(String.valueOf(correctAnswersCount));
+                fileWriter.flush();
+                FXMLLoader loader = new FXMLLoader();
+                URL url = getClass().getResource("/result.fxml");
+                loader.setLocation(url);
+                Parent root = loader.load();
+                Scene scene = quitButton.getScene();
+                scene.setRoot(root);
+                File file = new File("result.txt");
+                file.delete();
+                fileWriter.close();
+            } else {
                 for (int i = 0; i < buttons.size(); i++) {
-                    if(buttons.get(i).equals(selectedButton)) {
+                    if (buttons.get(i).equals(selectedButton)) {
                         int answerNumber = i;
                         Question question = questions.get(currentQuestion);
                         ArrayList<Answer> answers = question.answers;
                         Answer userAnswer = answers.get(answerNumber);
-                        if(userAnswer.isCorrect) {
-                            System.out.println("+++");
-                        }
-                        else {
-                            System.out.println("---");
+                        if (userAnswer.isCorrect) {
+                            correctAnswersCount++;
                         }
                     }
                 }
+                currentQuestion += 1;
+                for (int i = 0; i < buttons.size(); i++) {
+                    ((RadioButton) buttons.get(i)).setText(questions.get(currentQuestion).answers.get(i).answer);
+                    buttons.get(i).setSelected(false);
+                }
             }
-        }
-        currentQuestion += 1;
-        for (int i = 0; i < buttons.size(); i++) {
-            ((RadioButton)buttons.get(i)).setText(questions.get(currentQuestion).answers.get(i).answer);
-            buttons.get(i).setSelected(false);
         }
     }
 
@@ -99,13 +128,9 @@ public class MainController {
 //            }
 //        }
         for (int i = 0; i < buttons.size(); i++) {
-            ((RadioButton)buttons.get(i)).setText(answers1.get(i).answer);
+            ((RadioButton) buttons.get(i)).setText(answers1.get(i).answer);
         }
     }
-
-
-
-
 
 
 }
